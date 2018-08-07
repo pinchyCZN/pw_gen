@@ -1,0 +1,112 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MAINDLG DIALOG DISCARDABLE  0, 0, 319, 134
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "PW GEN"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_OUTPUT,0,0,318,19,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "symbols",IDC_SYMBOLS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,71,25,41,10
+    CONTROL         "numbers",IDC_NUMBERS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,71,39,43,10
+    CONTROL         "upper case",IDC_UPPERCASE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,71,53,51,10
+    CONTROL         "lower case",IDC_LOWERCASE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,71,67,50,10
+    CONTROL         "exclude similar (il1Lo0O|)",IDC_EXCLUDE_SIM,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,71,81,93,10
+    CONTROL         "exclude ambigous",IDC_EXCLUDE_AMB,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,71,95,73,10
+    LTEXT           "length:",IDC_STATIC,159,25,22,8
+    COMBOBOX        IDC_LENGTH,187,23,59,195,CBS_DROPDOWN | WS_VSCROLL | 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "GENERATE",IDOK,153,54,50,14
+    PUSHBUTTON      "copy to clipboard",IDC_COPY,153,114,93,20
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_MAINDLG, DIALOG
+    BEGIN
+        VERTGUIDE, 71
+        VERTGUIDE, 153
+        HORZGUIDE, 114
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
