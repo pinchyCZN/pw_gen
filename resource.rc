@@ -42,8 +42,9 @@ BEGIN
                     WS_TABSTOP,71,67,50,10
     CONTROL         "exclude similar (il1Lo0O|)",IDC_EXCLUDE_SIM,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,71,81,93,10
-    CONTROL         "exclude ambigous",IDC_EXCLUDE_AMB,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,71,95,73,10
+    CONTROL         "exclude ambigous ({}[]()/\\'""`~,;:.<>)",
+                    IDC_EXCLUDE_AMB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,71,
+                    95,133,10
     LTEXT           "length:",IDC_STATIC,159,25,22,8
     COMBOBOX        IDC_LENGTH,187,23,59,195,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP

@@ -127,7 +127,7 @@ void init_combo(HWND hwnd)
 	int i;
 	SendMessage(hwnd,CB_LIMITTEXT,4,0);
 	SendMessage(hwnd,CB_RESETCONTENT,0,0);
-	for(i=4;i<200;i++){
+	for(i=4;i<100;i++){
 		char str[40];
 		_snprintf(str,sizeof(str),"%i",i);
 		SendMessage(hwnd,CB_ADDSTRING,0,(LPARAM)str);
@@ -166,6 +166,21 @@ int grippy_move(HWND hwnd,HWND grippy)
 	}
 	return 0;
 }
+void center_window(HWND hwnd)
+{
+	RECT rect;
+	if(GetWindowRect(GetDesktopWindow(),&rect)!=0){
+		int cx,cy;
+		cx=(rect.left+rect.right)/2;
+		cy=(rect.top+rect.bottom)/2;
+		if(GetWindowRect(hwnd,&rect)!=0){
+			int w,h;
+			w=rect.right-rect.left;
+			h=rect.bottom-rect.top;
+			SetWindowPos(hwnd,NULL,cx-w/2,cy-h/2,0,0,SWP_NOSIZE);
+		}
+	}
+}
 
 BOOL CALLBACK dlg_proc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
 {
@@ -178,6 +193,7 @@ BOOL CALLBACK dlg_proc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
 		CheckDlgButton(hwnd,IDC_LOWERCASE,BST_CHECKED);
 		SendDlgItemMessage(hwnd,IDC_OUTPUT,WM_SETFONT,(WPARAM)GetStockObject(SYSTEM_FIXED_FONT),0);
 		hgrippy=create_grippy(hwnd);
+		center_window(hwnd);
 		SetFocus(GetDlgItem(hwnd,IDOK));
 		break;
 	case WM_SIZING:
