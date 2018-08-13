@@ -182,6 +182,23 @@ void center_window(HWND hwnd)
 	}
 }
 
+WNDPROC old_edit_proc=0;
+LRESULT CALLBACK edit_proc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
+{	
+	switch(msg){
+	case WM_KEYDOWN:
+		{
+			int c=wparam;
+			if(c=='A'){
+				if(GetKeyState(VK_CONTROL)&0x8000)
+					SendMessage(hwnd,EM_SETSEL,0,-1);
+			}
+		}
+		break;
+	}
+	return CallWindowProc(old_edit_proc,hwnd,msg,wparam,lparam); 
+}
+
 BOOL CALLBACK dlg_proc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
 {
 	static HWND hgrippy;
@@ -192,6 +209,7 @@ BOOL CALLBACK dlg_proc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
 		CheckDlgButton(hwnd,IDC_UPPERCASE,BST_CHECKED);
 		CheckDlgButton(hwnd,IDC_LOWERCASE,BST_CHECKED);
 		SendDlgItemMessage(hwnd,IDC_OUTPUT,WM_SETFONT,(WPARAM)GetStockObject(SYSTEM_FIXED_FONT),0);
+		old_edit_proc=SetWindowLong(GetDlgItem(hwnd,IDC_OUTPUT),GWL_WNDPROC,edit_proc);
 		hgrippy=create_grippy(hwnd);
 		center_window(hwnd);
 		SetFocus(GetDlgItem(hwnd,IDOK));
@@ -220,6 +238,9 @@ BOOL CALLBACK dlg_proc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
 					GetDlgItemText(hwnd,IDC_OUTPUT,tmp,sizeof(tmp));
 					copy_str_clipboard(tmp);
 				}
+				break;
+			case IDC_ONTOP:
+				SetWindowPos(hwnd,IsDlgButtonChecked(hwnd,LOWORD(wparam))?HWND_TOPMOST:HWND_NOTOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
 				break;
 			case IDOK:
 				{
