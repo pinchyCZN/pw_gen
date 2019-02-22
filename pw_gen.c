@@ -1,7 +1,9 @@
+#define _WIN32_WINNT 0x0400
 #include <windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "resource.h"
+
 
 typedef struct{
 	int symbols;
@@ -12,6 +14,25 @@ typedef struct{
 	int exc_ambiguous;
 	int len;
 }PARAMS;
+
+HCRYPTPROV g_hcrypto=0;
+
+int setup_crypto()
+{
+	return CryptAcquireContext(&g_hcrypto,NULL,NULL,PROV_RSA_FULL,0);
+}
+int my_rand()
+{
+	int buf;
+	int res;
+	res=CryptGenRandom(g_hcrypto,sizeof(int),&buf);
+	if(!res){
+		MessageBox(NULL,"CryptGenRandom failed!","ERROR",MB_OK|MB_SYSTEMMODAL);
+		exit(0);
+	}
+	return buf&0x7FFFFFFF;
+}
+
 void gen_pw(char *buf,int buf_len,PARAMS *params)
 {
 	const char *similar="il1Lo0O|";
@@ -51,7 +72,6 @@ void gen_pw(char *buf,int buf_len,PARAMS *params)
 		list[index].len=strlen(symbols);
 		index++;
 	}
-	srand(GetTickCount());
 	memset(buf,0,buf_len);
 	count=index;
 	index=0;
@@ -61,14 +81,14 @@ void gen_pw(char *buf,int buf_len,PARAMS *params)
 		int j,len;
 		const char *tmp;
 		unsigned char a=0;
-		j=rand()%count;
+		j=my_rand()%count;
 		len=sizeof(list)/sizeof(struct STR_ENTRY);
 		if(j>=len)
 			j=len-1;
 		tmp=list[j].str;
 		len=list[j].len;
 		if(tmp){
-			j=rand()%len;
+			j=my_rand()%len;
 			a=tmp[j];
 		}
 		if(params->exc_similar){
@@ -271,5 +291,12 @@ BOOL CALLBACK dlg_proc(HWND hwnd,UINT msg,WPARAM wparam,LPARAM lparam)
 
 int APIENTRY WinMain(HINSTANCE hinstance,HINSTANCE hprevinstance,LPSTR cmdline,int show)
 {
+	if(!setup_crypto()){
+		MessageBox(NULL,"Unable to initialize crypto library!","ERROR",MB_OK|MB_SYSTEMMODAL);
+		return -1;
+	}
 	DialogBox(hinstance,MAKEINTRESOURCE(IDD_MAINDLG),NULL,dlg_proc);
+	if(g_hcrypto){
+		CryptReleaseContext(g_hcrypto,0);
+	}
 }
